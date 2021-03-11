@@ -5,6 +5,12 @@ const middlewares = jsonServer.defaults();
 const port = process.env.PORT || 3000;
 
 server.use(middlewares);
+
+server.use(jsonServer.rewriter({
+  "/animalGroups*": "/animalGroups/$1?_embed=animals",
+  "/animals*": "/animals/$1?_expand=animalGroup"
+}));
+
 server.use(router);
 
 server.listen(port);
